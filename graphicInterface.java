@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class graphicInterface extends JFrame {
 	DefaultTableModel model = new DefaultTableModel();
@@ -52,34 +53,39 @@ public class graphicInterface extends JFrame {
 		add(panel);
 	}
 	private void Table() {
-		//for Shortest Path
+		
+		//QUESTION 1
 		submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				clearExistingTable();
 				response.setText("Shortest Path Entries are as follows : ");
-				getShortestPath();
+				String values[][] =Q1();
 				panel.add(scrollBar);
 				results.setShowGrid(true);
-				results.setGridColor(Color.red);
+				results.setGridColor(Color.green);
 				model.addColumn("#");
 				model.addColumn("Stop Name");
 				panel.add(timeTaken);
 				//display List of Stops
 				//display time taken
 				
-				//TODO import dataset
-				//TODO add dynamic row entry
+				for (int i = 0; i < values.length; i++) {
+					model.addRow(new Object[] {i+1,values[i][0]});
+				}
 				//TODO add Cost to timeTaken
 			}
 		});
+		//QUESTION 2
 		submit2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				clearExistingTable();
 				response.setText("Bus stop details are as follows : ");
-				getBusStopDetails();
+				String [][]values = Q2();
 				panel.add(scrollBar);
 				results.setShowGrid(true);
-				results.setGridColor(Color.red);
+				results.setGridColor(Color.green);
 				model.addColumn("#");
 				model.addColumn("Stop ID");
 				model.addColumn("Stop Code");
@@ -92,16 +98,19 @@ public class graphicInterface extends JFrame {
 				model.addColumn("Location Type");
 				model.addColumn("Parent Station");
 				//display full set of info - FOR EVERY STOP MATCHED
-				
-				//TODO import dataset
-				//TODO add dynamic row entry
+				for (int i = 0; i < values.length; i++) {
+						model.addRow(new Object[] {i+1, values[i][0], values[i][1], values[i][2], values[i][3], values[i][4], values[i][5], 
+								values[i][6], values[i][7], values[i][8], values[i][9]});						
+				}
 			}
 		});
+		// QUESTION 3
 		submit3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				clearExistingTable();
 				response.setText("The buses that arrive at the selected time are as follows : ");
-				getArrivalTime();
+				String [][]values = Q3();
 				panel.add(scrollBar);
 				results.setShowGrid(true);
 				results.setGridColor(Color.red);
@@ -117,16 +126,65 @@ public class graphicInterface extends JFrame {
 			    model.addColumn("Shape Distance Travelled");
 
 				//display all trips that return at hh:mm:ss
-			    
-			  //TODO import dataset
+			    for (int i = 0; i < values.length; i++) {
+					model.addRow(new Object[] {i+1, values[i][0], values[i][1], values[i][2], values[i][3], values[i][4], values[i][5], 
+							values[i][6], values[i][7], values[i][8]});
+			    }
+			  //TODO import data-set
 			  //TODO add dynamic row entry
 			}
 		});
 	}
-	public void getShortestPath() {	
+	public void clearExistingTable() {
+		int rowCount = model.getRowCount();
+		int columnCount = model.getColumnCount();
+		
+		if (rowCount > 0) {
+			for (int i = 0; i < rowCount; i++) {
+				System.out.println(rowCount);
+				model.removeRow((rowCount-1) - i);
+			}
+		}
+		if (columnCount > 0) {
+			for (int i = 0; i < columnCount; i++) {
+				System.out.println(columnCount);
+				removeColumn(results,columnCount-i);
+			}
+		}
 	}
-	public void getBusStopDetails() {
+	public void removeColumn(JTable table, int colInd) {
+		TableColumn tcol = results.getColumnModel().getColumn(colInd);
+		results.getColumnModel().removeColumn(tcol);
 	}
-	public void getArrivalTime() {
+	//		^
+	//		|
+	//		|
+	//
+	// FIX WHATEVER SIMPLE ERROR MY UNMITTIGATED DISASTER OF A BRAIN CANT FIGURE OUT WITH THIS ARRAY OOB BS
+	// GOD DAMN COLUMNS GOTTA BE DIFFERENT
+	//
+	//
+	
+	public String[][] Q1() {	
+		// magically conjures up some lovely data about Stop Times
+		String [][]shortestPathStuff = {{"Dublin"} , {"Meath"} , {"Wicklow"}};
+		return shortestPathStuff;
 	}
+	public String[][] Q2() {
+		//gives us yummy bus stop names
+		String [][] busStopSearchStuff = {{"2346","5-7","Carlow","Pretty ugly", "324.65","2","4","Kidnap.com","Physical","0"},
+				{"728","3-9-0","Honolulu","Hot", "1212","5","5","Collect.com","Imaginary","0"}};
+		return busStopSearchStuff;
+	}
+	public String[][] Q3() {
+		//invents a load of data that means something to somebody im sure
+		String [][] arrivalTimesStuff = {{"2346","24:00:43","12:00:00", "32465","2","4","Kidnap","Deposit","Many many miles"},
+				{"728","17:00:25","23:12:21", "1212","5","5","Collect","Leave","A fair few many miles"}};
+		return arrivalTimesStuff;
+	}
+	//
+	//
+	// ACTUALLY DO SOMETHING AS SUPPOSED TO PRETENDING THIS DATA IS REAL
+	//
+	//
 }
