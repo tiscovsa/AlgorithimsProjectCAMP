@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 public class graphicInterface extends JFrame {
+	private String userText;
 	DefaultTableModel model = new DefaultTableModel();
 	private JLabel instructions1 = new JLabel("For 1 - Shortest Path : Enter 2 bus stop names delimited by a comma.");
 	private JTextField searchBar = new JTextField(30);
@@ -59,6 +60,7 @@ public class graphicInterface extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearExistingTable();
+				userText = searchBar.getText();
 				response.setText("Shortest Path Entries are as follows : ");
 				String values[][] =Q1();
 				panel.add(scrollBar);
@@ -73,6 +75,7 @@ public class graphicInterface extends JFrame {
 				for (int i = 0; i < values.length; i++) {
 					model.addRow(new Object[] {i+1,values[i][0]});
 				}
+				System.out.println(userText);
 				//TODO add Cost to timeTaken
 			}
 		});
@@ -81,6 +84,7 @@ public class graphicInterface extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearExistingTable();
+				userText = searchBar2.getText();
 				response.setText("Bus stop details are as follows : ");
 				String [][]values = Q2();
 				panel.add(scrollBar);
@@ -109,6 +113,7 @@ public class graphicInterface extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearExistingTable();
+				userText = searchBar3.getText();
 				response.setText("The buses that arrive at the selected time are as follows : ");
 				String [][]values = Q3();
 				panel.add(scrollBar);
