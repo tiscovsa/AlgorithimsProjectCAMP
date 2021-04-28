@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -28,6 +30,7 @@ public class graphicInterface extends JFrame {
     private JLabel timeTaken = new JLabel();
     
 	public static void main(String[] args) {
+		
 		new graphicInterface("Algorithms & Data Structures II Project");
 		// TODO
 	}
@@ -54,7 +57,7 @@ public class graphicInterface extends JFrame {
 		add(panel);
 	}
 	private void Table() {
-		
+		//results.setAutoCreateColumnsFromModel(true);
 		//QUESTION 1
 		submit.addActionListener(new ActionListener() {
 			@Override
@@ -68,6 +71,7 @@ public class graphicInterface extends JFrame {
 				results.setGridColor(Color.green);
 				model.addColumn("#");
 				model.addColumn("Stop Name");
+				//results.setAutoCreateColumnsFromModel(false);
 				panel.add(timeTaken);
 				//display List of Stops
 				//display time taken
@@ -101,6 +105,7 @@ public class graphicInterface extends JFrame {
 				model.addColumn("Stop URL");
 				model.addColumn("Location Type");
 				model.addColumn("Parent Station");
+				//results.setAutoCreateColumnsFromModel(false);
 				//display full set of info - FOR EVERY STOP MATCHED
 				for (int i = 0; i < values.length; i++) {
 						model.addRow(new Object[] {i+1, values[i][0], values[i][1], values[i][2], values[i][3], values[i][4], values[i][5], 
@@ -129,6 +134,7 @@ public class graphicInterface extends JFrame {
 			    model.addColumn("Pickup Type");
 			    model.addColumn("Drop-off Type");
 			    model.addColumn("Shape Distance Travelled");
+			    //results.setAutoCreateColumnsFromModel(false);
 
 				//display all trips that return at hh:mm:ss
 			    for (int i = 0; i < values.length; i++) {
@@ -142,33 +148,30 @@ public class graphicInterface extends JFrame {
 	}
 	public void clearExistingTable() {
 		int rowCount = model.getRowCount();
-		int columnCount = model.getColumnCount();
+		int columnCount = model.getColumnCount()-1;
+		model.setColumnCount(0);
 		
 		if (rowCount > 0) {
 			for (int i = 0; i < rowCount; i++) {
-				System.out.println(rowCount);
+				//System.out.println(rowCount);
 				model.removeRow((rowCount-1) - i);
 			}
 		}
-		if (columnCount > 0) {
+		/*if (columnCount > 0) {
+			System.out.println(columnCount);
 			for (int i = 0; i < columnCount; i++) {
-				System.out.println(columnCount);
-				removeColumn(results,columnCount-i);
+				
+				//System.out.println(columnCount);
+				//removeColumn(results,(columnCount-1)-i);
 			}
+		Enumeration<TableColumn> count = results.getColumnModel().getColumns();
+		while (count.hasMoreElements()) {
+			System.out.println("!weifugwei!");
+			results.getColumnModel().removeColumn(count.nextElement());
 		}
+		}*/
 	}
-	public void removeColumn(JTable table, int colInd) {
-		TableColumn tcol = results.getColumnModel().getColumn(colInd);
-		results.getColumnModel().removeColumn(tcol);
-	}
-	//		^
-	//		|
-	//		|
-	//
-	// FIX WHATEVER SIMPLE ERROR MY UNMITTIGATED DISASTER OF A BRAIN CANT FIGURE OUT WITH THIS ARRAY OOB BS
-	// GOD DAMN COLUMNS GOTTA BE DIFFERENT
-	//
-	//
+
 	
 	public String[][] Q1() {	
 		// magically conjures up some lovely data about Stop Times
