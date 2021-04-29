@@ -180,12 +180,6 @@ public class graphicInterface extends JFrame {
 		String [][]shortestPathStuff = {{"Dublin"} , {"Meath"} , {"Wicklow"}};
 		return shortestPathStuff;
 	}
-	public String[][] Q2() {
-		//gives us yummy bus stop names
-		String [][] busStopSearchStuff = {{"2346","5-7","Carlow","Pretty ugly", "324.65","2","4","Kidnap.com","Physical","0"},
-				{"728","3-9-0","Honolulu","Hot", "1212","5","5","Collect.com","Imaginary","0"}};
-		return busStopSearchStuff;
-	}
 	public String[][] Q3(String time) {	
 		//invents a load of data that means something to somebody im sure	
 //		String [][] arrivalTimesStuff = {{"2346","24:00:43","12:00:00", "32465","2","4","Kidnap","Deposit","Many many miles"},	
