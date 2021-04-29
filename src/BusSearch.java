@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public class BusSearch {
 
-	public Tst createTree(String textFile)
+	public Tst createTree()
 	{
 	  	Tst tree = new Tst();
-    	File file = new File(textFile);
+    	File file = new File("stops.txt");
     	Scanner input;
 		try 
 		{
@@ -26,12 +26,15 @@ public class BusSearch {
 	    				currentRoad = currentRoad.substring(3);
 	    				currentRoad = currentRoad + " " + prefix;
 	    			}
-	    			currentRoad = currentRoad + "\n ID: " +id;
-	    			currentRoad = currentRoad + "\n Code: " +code;
-	    			currentRoad = currentRoad + "\n Stop Description: " +input.next();
-	    			currentRoad = currentRoad + "\n Stop Lat: " +input.next();
-	    			currentRoad = currentRoad + "\n Stop Lon: " +input.next();
-	    			currentRoad = currentRoad + "\n Stop Zone: " +input.next();
+	    			currentRoad = currentRoad + "\n" +id;
+	    			currentRoad = currentRoad + "\n" +code;
+	    			currentRoad = currentRoad + "\n" +input.next();
+	    			currentRoad = currentRoad + "\n" +input.next();
+	    			currentRoad = currentRoad + "\n" +input.next();
+	    			currentRoad = currentRoad + "\n" +input.next();
+	    			currentRoad = currentRoad + "\n" + "none";
+	    			currentRoad = currentRoad + "\n" + "none";
+	    			currentRoad = currentRoad + "\n" + "0";
 	    			tree.add(currentRoad);
 	    			input.nextLine();
 	    	}
@@ -44,21 +47,56 @@ public class BusSearch {
 			return null;
 		}
 	}
-	public void search(String roadPrefix)
+	public String[][] search(String roadPrefix,Tst tree)
 	{
-		Tst tree = createTree("stops.txt");
+		
 		String roadListString = tree.keysWithPrefix(roadPrefix).toString();
 		roadListString = roadListString.substring( 1, roadListString.length() - 1 );
-		List<String> roadList = new ArrayList<String>(Arrays.asList(roadListString.split(",")));
-		for(int i = 0;i < roadList.size();i++)
-		{	
-			System.out.println(roadList.get(i) +"\n");
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^\n");
+		List<String> roadList = new ArrayList<String>(Arrays.asList(roadListString.split(",|\\n")));
+		
+		int row = 10;
+		int columns = roadList.size()/row;
+		String [][] busStops = new String [columns][row];
+		for(int i = 0;i < columns;i++)
+		{
+			for(int j = 0;j < row;j++)
+			{
+				busStops[i][j] = roadList.get(j + i*row);
+			}
 		}
+		return busStops;
+	}
+	public void searchTest(String roadPrefix,Tst tree)
+	{
+		
+		String roadListString = tree.keysWithPrefix(roadPrefix).toString();
+		roadListString = roadListString.substring( 1, roadListString.length() - 1 );
+		List<String> roadList = new ArrayList<String>(Arrays.asList(roadListString.split(",|\\n")));
+		
+		int row = 10;
+		int columns = roadList.size()/row;
+		String [][] busStops = new String [columns][row];
+		for(int i = 0;i < columns;i++)
+		{
+			for(int j = 0;j < row;j++)
+			{
+				busStops[i][j] = roadList.get(j + i*row);
+			}
+		}
+		for(int i = 0;i < columns;i++)
+		{
+			for(int j = 0;j < row;j++)
+			{
+				System.out.println(busStops[i][j]);
+			}
+		}
+		System.out.println(busStops.length);
+		
 	}
     public static void main(String[] args) {
     	
     	BusSearch searcher = new BusSearch();
+    	Tst tree = searcher.createTree();
     	boolean go = true;
     	Scanner input = new Scanner(System.in);
     	while(go)
@@ -69,7 +107,7 @@ public class BusSearch {
     		{
     			go = false;
     		}
-    		searcher.search(userEntry);
+    		searcher.searchTest(userEntry,tree);
     		
     	}
     }
