@@ -66,51 +66,6 @@ public class BusSearch {
 		}
 		return busStops;
 	}
-	public void searchTest(String roadPrefix,Tst tree)
-	{
-		
-		String roadListString = tree.keysWithPrefix(roadPrefix).toString();
-		roadListString = roadListString.substring( 1, roadListString.length() - 1 );
-		List<String> roadList = new ArrayList<String>(Arrays.asList(roadListString.split(",|\\n")));
-		
-		int row = 10;
-		int columns = roadList.size()/row;
-		String [][] busStops = new String [columns][row];
-		for(int i = 0;i < columns;i++)
-		{
-			for(int j = 0;j < row;j++)
-			{
-				busStops[i][j] = roadList.get(j + i*row);
-			}
-		}
-		for(int i = 0;i < columns;i++)
-		{
-			for(int j = 0;j < row;j++)
-			{
-				System.out.println(busStops[i][j]);
-			}
-		}
-		System.out.println(busStops.length);
-		
-	}
-    public static void main(String[] args) {
-    	
-    	BusSearch searcher = new BusSearch();
-    	Tst tree = searcher.createTree();
-    	boolean go = true;
-    	Scanner input = new Scanner(System.in);
-    	while(go)
-    	{
-    		System.out.println("Search for street or enter 'exit' to leave");
-    		String userEntry = input.nextLine();
-    		if(userEntry == "exit")
-    		{
-    			go = false;
-    		}
-    		searcher.searchTest(userEntry,tree);
-    		
-    	}
-    }
     
 }       
 

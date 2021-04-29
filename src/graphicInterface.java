@@ -122,7 +122,7 @@ public class graphicInterface extends JFrame {
 				clearExistingTable();
 				userText = searchBar3.getText();
 				response.setText("The buses that arrive at the selected time are as follows : ");
-				String [][]values = Q3();
+				String [][]values = Q3(userText);
 				panel.add(scrollBar);
 				results.setShowGrid(true);
 				results.setGridColor(Color.red);
@@ -186,12 +186,13 @@ public class graphicInterface extends JFrame {
 				{"728","3-9-0","Honolulu","Hot", "1212","5","5","Collect.com","Imaginary","0"}};
 		return busStopSearchStuff;
 	}
-	public String[][] Q3() {
-		//invents a load of data that means something to somebody im sure
-		String [][] arrivalTimesStuff = {{"2346","24:00:43","12:00:00", "32465","2","4","Kidnap","Deposit","Many many miles"},
-				{"728","17:00:25","23:12:21", "1212","5","5","Collect","Leave","A fair few many miles"}};
-		return arrivalTimesStuff;
-	}
+	public String[][] Q3(String time) {	
+		//invents a load of data that means something to somebody im sure	
+//		String [][] arrivalTimesStuff = {{"2346","24:00:43","12:00:00", "32465","2","4","Kidnap","Deposit","Many many miles"},	
+//				{"728","17:00:25","23:12:21", "1212","5","5","Collect","Leave","A fair few many miles"}};	
+		String [][] s = BusTimes.serachByTripEnd(time);	
+		return s;	
+	}	
 	//
 	//
 	// ACTUALLY DO SOMETHING AS SUPPOSED TO PRETENDING THIS DATA IS REAL
