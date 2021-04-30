@@ -1,4 +1,5 @@
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
@@ -16,24 +17,14 @@ import java.util.Scanner;
 public class BusTimes {
 	
 	public static String[][] serachByTripEnd(String time) {
+		if (time != null && !time.isEmpty()) {
+			  // doSomething
+		
 		
 		
 		int index = 0;
 		//error check input 
-//		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//		try {
-//		  Date dt = formatter.parse(time);
-//		  Calendar cal = Calendar.getInstance();
-//		  cal.setTime(dt);
-//		  int inputHour = cal.get(Calendar.HOUR);
-//		  int inputMinute = cal.get(Calendar.MINUTE);
-//		  int inputSecond = cal.get(Calendar.SECOND);
-//		} catch (ParseException e) {
-//		  // This can happen if you are trying to parse an invalid date, e.g., 25:19:12.
-//		  System.out.println("You must enter a valid time");
-//		  e.printStackTrace();
-//		}
-		//read data from file
+
 		
 		//reading file data to an arraylist
         try {
@@ -79,28 +70,7 @@ public class BusTimes {
             
             //find min and max index of the range for matching times
             int low = lower_bound(stops, time, 0, stops.size());
-//            System.out.println(low);
-           // int high = upper_bound(stops, time, 0, stops.size());
-//            int high = binarySearch(stops, 0, stops.size()-1, time);
-//            long answer = 0;
-//    		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//    		try {
-//    		  Date dt = formatter.parse(time);
-//    		  Calendar cal = Calendar.getInstance();
-//    		  cal.setTime(dt);
-//    		  int inputHour = cal.get(Calendar.HOUR);
-//    		  System.out.println(inputHour);
-//    		  int inputMinute = cal.get(Calendar.MINUTE);
-//    		  System.out.println(inputMinute);
-//    		  int inputSecond = cal.get(Calendar.SECOND);
-//    		  System.out.println(inputSecond);
-//    		   answer = (inputHour * 60 * 60) + (inputMinute* 60) + inputSecond;
-//    		} catch (ParseException e) {
-//    		  // This can happen if you are trying to parse an invalid date, e.g., 25:19:12.
-//    		  System.out.println("You must enter a valid time");
-//    		  e.printStackTrace();
-//    		}
-            //////
+
             LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm:ss"));
             int hour = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
             int minute = localTime.get(ChronoField.MINUTE_OF_HOUR);
@@ -119,23 +89,10 @@ public class BusTimes {
             
             
             ArrayList<BusObject> results = new ArrayList<BusObject>(); // Create an ArrayList for results
-//            for(int i = 0; i < stops.size(); i++) {
-////            	System.out.println(stops.get(i).arrival_time);
-//            	if(stops.get(i).arrival_time.equals(time)) {
-////            		System.out.print(b.stop_id);
-////            		System.out.println("match found");
-//            		results.add(stops.get(i));
-//            		
-//            	}
-//            	//System.out.print(b.tripId);
-//            }
-//            display results
+
             
           for(int i = low; i < high; i++) {
-//    	System.out.println(stops.get(i).arrival_time);
-//    	if(stops.get(i).arrival_time.equals(time)) {
-//    		System.out.print(b.stop_id);
-//    		System.out.println("match found");
+
     		results.add(stops.get(i));
     		
 //    	}
@@ -174,10 +131,13 @@ public class BusTimes {
 //            }
 
         } catch (FileNotFoundException e) {         
-            e.printStackTrace();
+           // e.printStackTrace();
             return new String[0][0];
         }
-       
+		}
+		else {
+		return new String[1][9];
+		}
       
 	}
 	
@@ -197,72 +157,7 @@ public class BusTimes {
 	    else
 	        return lower_bound(stops, key, mid + 1, high);
 	}
-//
-//	public static int upper_bound(ArrayList<BusObject> stops, String key, int low, int high)
-//	{
-//	    if (low > high)
-//	        //return -1;
-//	        return low;
-//
-//	    int mid = low + ((high - low) >> 1);
-//	    //if (arr[mid] == key) return mid;
-//
-//	    //Attention here, we go right for upper_bound when meeting equal values
-////	    if (arr[mid] > key) 
-//	    if (stops.get(mid).arrival_time.compareTo(key) > 0) 
-//	        return upper_bound(stops, key, low, mid - 1);
-//	    else
-//	        return upper_bound(stops, key, mid + 1, high);
-//	}
-//	
-//    public static int binarySearch(ArrayList<BusObject> stops, int l, int r, String x)
-//    {
-//        if (r >= l) {
-//            int mid = l + (r - l) / 2;
-// 
-//            // If the element is present at the
-//            // middle itself
-//            if (stops.get(mid).arrival_time.equals(x))
-//                return mid;
-// 
-//            // If element is smaller than mid, then
-//            // it can only be present in left subarray
-//            if (stops.get(mid).arrival_time.compareTo(x) > 0)
-//                return binarySearch(stops, l, mid - 1, x);
-// 
-//            // Else the element can only be present
-//            // in right subarray
-//            return binarySearch(stops, mid + 1, r, x);
-//        }
-// 
-//        // We reach here when element is not present
-//        // in array
-//        return -1;
-//    }
-//    
-//    static int binarySearch(ArrayList<BusObject> stops, String x)
-//    {
-//        int l = 0, r = stops.size() - 1;
-//        while (l <= r) {
-//            int m = l + (r - l) / 2;
-//  
-//            int res = x.compareTo(stops.get(m).arrival_time);
-//  
-//            // Check if x is present at mid
-//            if (res == 0)
-//                return m;
-//  
-//            // If x greater, ignore left half
-//            if (res > 0)
-//                l = m + 1;
-//  
-//            // If x is smaller, ignore right half
-//            else
-//                r = m - 1;
-//        }
-//  
-//        return -1;
-//    }
+
     
     public static int binarySearch(ArrayList<BusObject> stops, int l, int r, int x)
     {
@@ -271,20 +166,6 @@ public class BusTimes {
             int mid = l + (r - l) / 2;
             
             int answer = 0;
-//    		DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-//    		try {
-//    		  Date dt = formatter.parse(stops.get(mid).arrival_time);
-//    		  Calendar cal = Calendar.getInstance();
-//    		  cal.setTime(dt);
-//    		  int inputHour = cal.get(Calendar.HOUR);
-//    		  int inputMinute = cal.get(Calendar.MINUTE);
-//    		  int inputSecond = cal.get(Calendar.SECOND);
-//    		   answer = (inputHour * 60 * 60) + (inputMinute* 60) + inputSecond;
-//    		} catch (ParseException e) {
-//    		  // This can happen if you are trying to parse an invalid date, e.g., 25:19:12.
-//    		  System.out.println("You must enter a valid time");
-//    		  e.printStackTrace();
-//    		}
             try {
             LocalTime localTime = LocalTime.parse(stops.get(mid).arrival_time, DateTimeFormatter.ofPattern("HH:mm:ss"));
             int hour = localTime.get(ChronoField.CLOCK_HOUR_OF_DAY);
@@ -328,5 +209,7 @@ public class BusTimes {
  
 
 }
+
+
 
 
