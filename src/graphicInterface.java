@@ -29,6 +29,9 @@ public class graphicInterface extends JFrame {
     private JScrollPane scrollBar = new JScrollPane(results);
     private JLabel timeTaken = new JLabel();
     
+    private String start;
+    private String end;
+    
 	public static void main(String[] args) {
 		
 		new graphicInterface("Algorithms & Data Structures II Project");
@@ -64,6 +67,9 @@ public class graphicInterface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				clearExistingTable();
 				userText = searchBar.getText();
+				String[] temp = userText.split(",");
+				start = temp[0];
+				end = temp[1];
 				response.setText("Shortest Path Entries are as follows : ");
 				String values[][] =Q1();
 				panel.add(scrollBar);
@@ -177,7 +183,11 @@ public class graphicInterface extends JFrame {
 	
 	public String[][] Q1() {	
 		// magically conjures up some lovely data about Stop Times
-		String [][]shortestPathStuff = {{"Dublin"} , {"Meath"} , {"Wicklow"}};
+		
+		//WB HASTINGS ST FS WILLINGDON AVE,WB HASTINGS ST FS HYTHE AVE
+		//WB HASTINGS ST FS WILLINGDON AVE,WB HASTINGS ST FS SPERLING AVE
+		//WB HASTINGS ST FS HOLDOM AVE-,FLAGSTOP SB ON WESTHILL DR
+		String [][]shortestPathStuff = Dijkstras.runShortestPath("transfers.txt", start, end);
 		return shortestPathStuff;
 	}
 	public String[][] Q3(String time) {	
